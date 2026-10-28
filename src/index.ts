@@ -55,8 +55,18 @@ async function route(req: Request, env: Env): Promise<Response> {
     });
   }
 
+  if (path === "/oauth/link" && req.method === "POST") {
+    if (!isSetupAuthed(url, env)) return Response.json({ error: "unauthorized" }, { status: 401 });
+    const id = crypto.randomUUID().replace(/-/g, "");
+    await env.KV.put(`oauth_link:${id}`, "1", { expirationTtl: 1800 });
+    return Response.json({ url: `${url.origin}/oauth/start?link=${id}`, expires_in: 1800 });
+  }
+
   if (path === "/oauth/start") {
-    if (!isSetupAuthed(url, env)) return html("Forbidden", "<p>Missing or wrong setup key.</p>", 403);
+    const link = url.searchParams.get("link") ?? "";
+    let linkOk = false;
+    if (link && (await env.KV.get(`oauth_link:${link}`))) { await env.KV.delete(`oauth_link:${link}`); linkOk = true; }
+    if (!linkOk && !isSetupAuthed(url, env)) return html("Forbidden", "<p>This sign-in link is invalid, expired or already used.</p>", 403);
     if (!googleConfigured(env)) return html("Not configured", "<p>GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET secrets are not set on the Worker yet.</p>", 503);
     const state = crypto.randomUUID();
     await env.KV.put(`oauth_state:${state}`, "1", { expirationTtl: 600 });
