@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mi-health",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "account_id": "b54d1750488e6b298d0f8f3d92ebd069",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  "kv_namespaces": [
+    { "binding": "KV", "id": "bfec97b8e4d140dbbc18b97639656878" }
+  ],
+  "vars": {
+    "PUBLIC_URL": "https://mi-health.kapil-lohani.workers.dev",
+    "USER_TIMEZONE": "Asia/Calcutta",
+    "DATA_SOURCE_FAMILY": "users/me/dataSourceFamilies/all-sources"
+  }
+  // Secrets (set with `wrangler secret put`): MCP_TOKEN, SETUP_KEY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+}
