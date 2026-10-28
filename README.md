@@ -82,3 +82,6 @@ curl -s https://mi-health.kapil-lohani.workers.dev/mcp \
   -H "authorization: Bearer $MCP_TOKEN" -H 'content-type: application/json' \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
+
+## Auto-deploy (pending)
+`ci/deploy.yml` is the GitHub Actions deploy workflow. Move it to `.github/workflows/deploy.yml` once a token with the Workflows permission is available. The repo secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are already set.
