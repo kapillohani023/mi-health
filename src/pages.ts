@@ -12,7 +12,7 @@ export const PRIVACY = `${nav}<p><em>Last updated: ${UPDATED}</em></p>
 <h3>How data is used</h3>
 <p>The data is used only to answer the owner's questions about their own steps and sleep through their personal AI assistant. It is not used for advertising, profiling, or any other purpose, and it is not sold, shared with, or transferred to third parties, except as needed to deliver those answers to the owner's own assistant.</p>
 <h3>Storage and retention</h3>
-<p>Health data is fetched on demand and is not stored permanently. The only thing stored is the OAuth refresh token, plus a short-lived access token, kept encrypted at rest in Cloudflare Workers KV so the service can keep reading the owner's data. Revoking access deletes its usefulness immediately.</p>
+<p>Health data is fetched on demand and is not stored permanently. The only thing stored is the OAuth refresh token, plus a short-lived access token, kept encrypted at rest in Cloudflare Workers KV so the service can keep reading the owner's data. Once access is revoked, the stored token stops working and no further data can be read.</p>
 <h3>Revoking access</h3>
 <p>The owner can revoke access at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
 <h3>Google API Services User Data Policy</h3>
