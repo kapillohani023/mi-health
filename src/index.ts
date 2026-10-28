@@ -4,6 +4,7 @@ import {
   addDays, buildAuthUrl, exchangeCode, getMeta, googleConfigured, hasRefreshToken,
   HealthError, redirectUri, sleepRaw, stepsRaw, todayIn,
 } from "./google";
+import { HOME, PRIVACY, TERMS } from "./pages";
 
 function timingSafeEqual(a: string, b: string) {
   if (!a || !b || a.length !== b.length) return false;
@@ -36,9 +37,9 @@ async function route(req: Request, env: Env): Promise<Response> {
 
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
 
-  if (path === "/" ) {
-    return Response.json({ service: "mi-health", endpoints: ["/health", "/mcp", "/oauth/start?key=…", "/oauth/callback", "/debug/raw?key=…"] });
-  }
+  if (path === "/") return html("mi-health", HOME);
+  if (path === "/privacy") return html("Privacy policy", PRIVACY);
+  if (path === "/terms") return html("Terms of service", TERMS);
 
   if (path === "/health") {
     const connected = await hasRefreshToken(env);
