@@ -3,3 +3,4 @@ node_modules/
 .secrets
 .dev.vars
 .consent_link
+.gh_token
