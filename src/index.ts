@@ -65,7 +65,7 @@ async function route(req: Request, env: Env): Promise<Response> {
   if (path === "/oauth/start") {
     const link = url.searchParams.get("link") ?? "";
     let linkOk = false;
-    if (link && (await env.KV.get(`oauth_link:${link}`))) { await env.KV.delete(`oauth_link:${link}`); linkOk = true; }
+    if (link && (await env.KV.get(`oauth_link:${link}`, { cacheTtl: 60 }))) linkOk = true; // reusable until expiry; link previews must not burn it
     if (!linkOk && !isSetupAuthed(url, env)) return html("Forbidden", "<p>This sign-in link is invalid, expired or already used.</p>", 403);
     if (!googleConfigured(env)) return html("Not configured", "<p>GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET secrets are not set on the Worker yet.</p>", 503);
     const state = crypto.randomUUID();

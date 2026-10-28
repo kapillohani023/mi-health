@@ -2,3 +2,4 @@ node_modules/
 .wrangler/
 .secrets
 .dev.vars
+.consent_link
